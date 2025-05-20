@@ -49,7 +49,7 @@ for i in {1..60}; do
 done
 set -e
 
-SERVICE_ACCOUNT=$(cat gcloud-creds.json; | jq -r '.client_email')
+SERVICE_ACCOUNT=$(cat gcloud-creds.json | jq -r '.client_email')
 echo "    --> make smoketest on bastion with user $SERVICE_ACCOUNT"
 gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo/examples/gcp; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/gcloud-creds.json; echo yes | make smoketest"
 
