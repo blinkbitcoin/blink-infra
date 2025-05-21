@@ -16,12 +16,6 @@ provider "kubernetes" {
   cluster_ca_certificate = var.cluster_ca_cert
 }
 
-resource "google_project_iam_member" "concourse_k8s_admin" {
-  project = "infra-testflight"
-  role    = "roles/container.admin"
-  member  = "serviceAccount:concourse-sa@infra-testflight.iam.gserviceaccount.com"
-}
-
 provider "helm" {
   kubernetes {
     host                   = var.cluster_endpoint
