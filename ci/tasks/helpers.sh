@@ -38,6 +38,8 @@ EOF
 
 function init_bootstrap_gcp() {
   pushd bootstrap
+  echo "    --> Verifying bootstrap state directory exists"
+  ls -la ../../../../bootstrap-tf-state
   cat <<EOF > override.tf
 terraform {
   backend "local" {
