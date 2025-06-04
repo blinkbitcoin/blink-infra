@@ -38,28 +38,12 @@ EOF
 
 function init_bootstrap_gcp() {
   pushd bootstrap
+  echo "    --> Verifying bootstrap state directory exists"
+  ls -la ../../../../bootstrap-tf-state
   cat <<EOF > override.tf
 terraform {
-  backend "kubernetes" {
-    secret_suffix = "testflight-gcp"
-    namespace     = "concourse-tf"
-    config_path   = "/root/.kube/config"
-  }
-}
-EOF
-
-  tofu init
-  popd
-}
-
-function init_bootstrap_azure() {
-  pushd bootstrap
-  cat <<EOF > override.tf
-terraform {
-  backend "kubernetes" {
-    secret_suffix = "testflight-azure"
-    namespace     = "concourse-tf"
-    config_path   = "/root/.kube/config"
+  backend "local" {
+    path = "../../../../bootstrap-tf-state/bootstrap.tfstate"
   }
 }
 EOF
