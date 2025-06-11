@@ -27,3 +27,9 @@ echo yes | TF_VAR_tf_state_bucket_force_destroy=true \
 
 echo "    --> cleanup_inception_key"
 cleanup_inception_key
+
+echo "    --> commit tfstate"
+pushd bootstrap
+cd ../../../../bootstrap-tf-state
+git commit -am "Update bootstrap tfstate"
+popd
