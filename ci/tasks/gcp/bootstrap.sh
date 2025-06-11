@@ -31,5 +31,5 @@ cleanup_inception_key
 echo "    --> commit tfstate"
 pushd bootstrap
 cd ../../../../bootstrap-tf-state
-git commit -am "Update bootstrap tfstate"
+make_commit "Update bootstrap tfstate"
 popd
