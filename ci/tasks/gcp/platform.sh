@@ -14,6 +14,8 @@ echo "    --> init_gcloud"
 init_gcloud
 echo "    --> init_kubeconfig"
 init_kubeconfig
+echo "    --> init_bootstrap_gcp"
+init_bootstrap_gcp
 
 echo "    --> write_users"
 write_users
