@@ -49,6 +49,7 @@ terraform {
 EOF
 
   tofu init
+  ls -la ../../../../bootstrap-tf-state
   popd
 }
 
@@ -85,7 +86,7 @@ function update_examples_git_ref() {
   sed -i'' "s/ref=.*\"/ref=${MODULES_GIT_REF}\"/" smoketest/main.tf
 }
 
-function make_commit() {
+function config_git() {
   echo "    --> git user config"
 
   if [[ -z $(git config --global user.email) ]]; then
@@ -94,6 +95,10 @@ function make_commit() {
   if [[ -z $(git config --global user.name) ]]; then
     git config --global user.name "CI blinkbitcoinbot"
   fi
+}
+
+function make_commit() {
+  config_git
 
   echo "    --> git merge (${BRANCH}) + commit -m '${1}'"
   (cd $(git rev-parse --show-toplevel)
