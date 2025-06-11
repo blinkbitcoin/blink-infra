@@ -32,5 +32,6 @@ echo "    --> commit tfstate"
 pushd bootstrap
 cd ../../../../bootstrap-tf-state
 config_git
+git add -A
 git commit -am "Update bootstrap tfstate"
 popd
