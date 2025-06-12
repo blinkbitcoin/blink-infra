@@ -26,7 +26,8 @@ bin/prep-inception.sh
 
 bastion_name="$(cd inception && tofu output bastion_name | jq -r)"
 bastion_zone="$(cd inception && tofu output bastion_zone | jq -r)"
-export BASTION_USER="sa_$(cat ${CI_ROOT}/gcloud-creds.json  | jq -r '.client_id')"
+BASTION_USER="sa_$(cat ${CI_ROOT}/gcloud-creds.json  | jq -r '.client_id')"
+export BASTION_USER
 export ADDITIONAL_SSH_OPTS="-o StrictHostKeyChecking=no -i ${CI_ROOT}/login.ssh"
 echo "    --> prepare ssh login to bastion"
 echo "        SERVICE_ACCOUNT: $SERVICE_ACCOUNT"
