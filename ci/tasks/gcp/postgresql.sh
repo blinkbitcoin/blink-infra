@@ -23,9 +23,6 @@ write_users
 
 echo "    --> bin/prep-inception.sh"
 bin/prep-inception.sh
-echo "    --> cleanup_inception_key"
-cleanup_inception_key
-
 
 bastion_name="$(cd inception && tofu output bastion_name | jq -r)"
 bastion_zone="$(cd inception && tofu output bastion_zone | jq -r)"
@@ -52,10 +49,13 @@ done
 set -e
 
 echo "    --> checking SERVICE_ACCOUNT on bastion"
-gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cat repo-pg/examples/gcp/inception-sa-creds.json | jq -r '.client_id'"
+gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cat repo-pg/examples/gcp/inception-sa-creds.json | jq -r '.client_email'"
 
 echo "    --> make postgresql on bastion"
 echo "        SERVICE_ACCOUNT: $SERVICE_ACCOUNT"
 echo "        BASTION_USER: $BASTION_USER"
 echo "        ADDITIONAL_SSH_OPTS: $ADDITIONAL_SSH_OPTS"
 gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo-pg/examples/gcp; export TF_VAR_destroyable_postgres=true; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/inception-sa-creds.json; echo yes | make postgresql"
+
+echo "    --> cleanup_inception_key"
+cleanup_inception_key
