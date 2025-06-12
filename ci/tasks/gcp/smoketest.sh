@@ -50,12 +50,12 @@ set -e
 SERVICE_ACCOUNT=$(cat gcloud-creds.json | jq -r '.client_email')
 echo "    --> make smoketest on bastion with "
 echo "        SERVICE_ACCOUNT (on local) = $SERVICE_ACCOUNT"
-echo "        SERVICE_ACCOUNT (on bastion) = $(cat ./inception-sa-creds.json  | jq -r '.client_email')"
+echo "        SERVICE_ACCOUNT (on bastion) = $(cat ./gcp-creds.json  | jq -r '.client_email')"
 echo "        BASTION_USER = $BASTION_USER"
 echo "        ADDITIONAL_SSH_OPTS = $ADDITIONAL_SSH_OPTS"
 echo "        bastion_name = $bastion_name"
 echo "        bastion_zone = $bastion_zone"
-gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo/examples/gcp; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/inception-sa-creds.json; echo yes | make smoketest"
+gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo/examples/gcp; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/gcp-creds.json; echo yes | make smoketest"
 
 echo "    --> cleanup_inception_key"
 cleanup_inception_key
