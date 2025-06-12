@@ -57,7 +57,7 @@ if [ $success -eq 1 ]; then
   echo yes | TF_VAR_tf_state_bucket_force_destroy=true make destroy-bootstrap
   echo "    --> Deleting local state file"
   # Delete the local state file after successful bootstrap destruction
-  rm -f ../../../../bootstrap-tf-state/bootstrap.tfstate
+  git rm ../../../../bootstrap-tf-state/bootstrap.tfstate
 else
   exit 1
 fi

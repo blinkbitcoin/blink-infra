@@ -80,6 +80,8 @@ plan:
       path: testflight-uid
     - name: bootstrap-tf-state
       path: bootstrap-tf-state
+    outputs:
+    - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/bootstrap.sh
@@ -108,6 +110,9 @@ plan:
   - get: gcp-testflight-uid
     passed:
     - #@ testflight_bootstrap_job_name("gcp")
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: inception
   attempts: 4
   config:
@@ -120,6 +125,7 @@ plan:
       path: modules
     - name: gcp-testflight-uid
       path: testflight-uid
+    - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/inception.sh
@@ -144,6 +150,9 @@ plan:
   - get: gcp-testflight-uid
     passed:
     - #@ testflight_inception_job_name("gcp")
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: platform
   config:
     platform: linux
@@ -155,6 +164,7 @@ plan:
       path: modules
     - name: gcp-testflight-uid
       path: testflight-uid
+    - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/platform.sh
@@ -214,6 +224,9 @@ plan:
   - get: gcp-testflight-uid
     passed:
     - #@ testflight_inception_job_name("gcp")
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: postgresql
   attempts: 4
   config:
@@ -226,6 +239,7 @@ plan:
       path: modules
     - name: gcp-testflight-uid
       path: testflight-uid
+    - name: bootstrap-tf-state 
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/postgresql.sh
@@ -254,7 +268,9 @@ plan:
     passed:
     - #@ testflight_smoketest_job_name("gcp")
     - #@ testflight_cleanup_postgresql_job_name("gcp")
-  - { get: bootstrap-tf-state }
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: teardown
   config:
     platform: linux
@@ -267,7 +283,6 @@ plan:
     - name: gcp-testflight-uid
       path: testflight-uid
     - name: bootstrap-tf-state
-      path: bootstrap-tf-state
     outputs:
     - name: repo
     params: #@ gcp_testflight_task_params()
@@ -298,6 +313,9 @@ plan:
   - get: gcp-testflight-uid
     passed:
     - #@ testflight_postgresql_job_name("gcp")
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: teardown
   attempts: 6
   config:
@@ -310,6 +328,7 @@ plan:
       path: modules
     - name: gcp-testflight-uid
       path: testflight-uid
+    - name: bootstrap-tf-state
     outputs:
     - name: repo
     params: #@ gcp_testflight_task_params()
@@ -433,9 +452,8 @@ source:
 name: bootstrap-tf-state
 type: git
 source:
-  paths: [tf-state/bootstrap]
-  uri: #@ data.values.git_uri
-  branch: #@ data.values.git_bootstrap_tf_state_branch
+  uri: git@github.com:blinkbitcoin/blink-infra-bootstrap-tfstate.git
+  branch: main
   private_key: #@ data.values.github_private_key
 #@ end
 
