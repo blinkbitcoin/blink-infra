@@ -25,14 +25,16 @@ echo "    --> bin/prep-inception.sh"
 bin/prep-inception.sh
 echo "    --> cleanup_inception_key"
 cleanup_inception_key
-export SERVICE_ACCOUNT=$(cat inception-sa-creds.json | jq -r '.client_email')
-export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
 
-echo "    --> prepare ssh login to bastion"
+
 bastion_name="$(cd inception && tofu output bastion_name | jq -r)"
 bastion_zone="$(cd inception && tofu output bastion_zone | jq -r)"
 export BASTION_USER="sa_$(cat ${CI_ROOT}/gcloud-creds.json  | jq -r '.client_id')"
 export ADDITIONAL_SSH_OPTS="-o StrictHostKeyChecking=no -i ${CI_ROOT}/login.ssh"
+echo "    --> prepare ssh login to bastion"
+echo "        SERVICE_ACCOUNT: $SERVICE_ACCOUNT"
+echo "        BASTION_USER: $BASTION_USER"
+echo "        ADDITIONAL_SSH_OPTS: $ADDITIONAL_SSH_OPTS"
 gcloud compute os-login ssh-keys add --key-file=${CI_ROOT}/login.ssh.pub
 
 cp ${CI_ROOT}/gcloud-creds.json ./

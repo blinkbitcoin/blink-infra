@@ -23,6 +23,7 @@ gcloud iam service-accounts keys create inception-sa-creds.json \
 # ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION: Precondition check failed.
 # that means that the quota for service account keys is reached.
 
+export SERVICE_ACCOUNT=$(cat inception-sa-creds.json | jq -r '.client_email')
 export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
 
 pushd inception
@@ -40,7 +41,7 @@ EOF
 echo "    --> Wait for the service account key to propagate"
 sleep 5
 
-echo "    --> tofu init"
+echo "    --> tofu init with SERVICE_ACCOUNT $SERVICE_ACCOUNT"
 tofu init
 
 echo "    --> tofu state show module.inception.google_project_iam_custom_role.inception_destroy || tofu apply ..."
