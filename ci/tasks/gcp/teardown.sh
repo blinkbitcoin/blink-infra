@@ -34,7 +34,7 @@ echo "    --> bin/prep-smoketest.sh"
 bin/prep-smoketest.sh
 
 echo "    --> make destroy-smoketest on bastion ${bastion_name}"
-gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo/examples/gcp; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/gcloud-creds.json; echo yes | make destroy-smoketest"
+gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cd repo/examples/gcp; export GOOGLE_APPLICATION_CREDENTIALS=\$(pwd)/inception-sa-creds.json; echo yes | make destroy-smoketest"
 
 echo "    --> make destroy-platform"
 echo yes | make destroy-platform
