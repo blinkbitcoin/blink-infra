@@ -25,6 +25,8 @@ echo "    --> bin/prep-inception.sh"
 bin/prep-inception.sh
 echo "    --> cleanup_inception_key"
 cleanup_inception_key
+export SERVICE_ACCOUNT=$(cat inception-sa-creds.json | jq -r '.client_email')
+export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
 
 echo "    --> prepare ssh login to bastion"
 bastion_name="$(cd inception && tofu output bastion_name | jq -r)"
