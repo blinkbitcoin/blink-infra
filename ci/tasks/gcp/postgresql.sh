@@ -51,7 +51,7 @@ set -e
 echo "    --> checking SERVICE_ACCOUNT on bastion"
 gcloud compute ssh --ssh-key-file=${CI_ROOT}/login.ssh ${bastion_name} --zone=${bastion_zone} -- "cat repo-pg/examples/gcp/inception-sa-creds.json | jq -r '.client_email'"
 
-echo "    --> make postgresql on bastion"
+echo "    --> make postgresql on bastion with"
 echo "        SERVICE_ACCOUNT: $SERVICE_ACCOUNT"
 echo "        BASTION_USER: $BASTION_USER"
 echo "        ADDITIONAL_SSH_OPTS: $ADDITIONAL_SSH_OPTS"

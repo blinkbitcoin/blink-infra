@@ -39,7 +39,10 @@ EOF
 function init_bootstrap_gcp() {
   pushd bootstrap
   echo "    --> Verifying bootstrap state directory exists"
-  ls -la ../../../../bootstrap-tf-state
+  if [ ! -d ../../../../bootstrap-tf-state ]; then
+    echo "    --> bootstrap.tfstate does not exist, exiting"
+    exit 1
+  fi
   cat <<EOF > override.tf
 terraform {
   backend "local" {
@@ -47,9 +50,8 @@ terraform {
   }
 }
 EOF
-
+  echo "    --> tofu init"
   tofu init
-  ls -la ../../../../bootstrap-tf-state
   popd
 }
 
