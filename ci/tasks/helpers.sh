@@ -38,32 +38,19 @@ EOF
 
 function init_bootstrap_gcp() {
   pushd bootstrap
+  echo "    --> Verifying bootstrap state directory exists"
+  if [ ! -d ../../../../bootstrap-tf-state ]; then
+    echo "    --> bootstrap.tfstate does not exist, exiting"
+    exit 1
+  fi
   cat <<EOF > override.tf
 terraform {
-  backend "kubernetes" {
-    secret_suffix = "testflight-gcp"
-    namespace     = "concourse-tf"
-    config_path   = "/root/.kube/config"
+  backend "local" {
+    path = "../../../../bootstrap-tf-state/bootstrap.tfstate"
   }
 }
 EOF
-
-  tofu init
-  popd
-}
-
-function init_bootstrap_azure() {
-  pushd bootstrap
-  cat <<EOF > override.tf
-terraform {
-  backend "kubernetes" {
-    secret_suffix = "testflight-azure"
-    namespace     = "concourse-tf"
-    config_path   = "/root/.kube/config"
-  }
-}
-EOF
-
+  echo "    --> tofu init"
   tofu init
   popd
 }
@@ -101,7 +88,7 @@ function update_examples_git_ref() {
   sed -i'' "s/ref=.*\"/ref=${MODULES_GIT_REF}\"/" smoketest/main.tf
 }
 
-function make_commit() {
+function config_git() {
   echo "    --> git user config"
 
   if [[ -z $(git config --global user.email) ]]; then
@@ -110,6 +97,10 @@ function make_commit() {
   if [[ -z $(git config --global user.name) ]]; then
     git config --global user.name "CI blinkbitcoinbot"
   fi
+}
+
+function make_commit() {
+  config_git
 
   echo "    --> git merge (${BRANCH}) + commit -m '${1}'"
   (cd $(git rev-parse --show-toplevel)

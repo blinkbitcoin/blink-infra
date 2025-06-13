@@ -1,28 +1,29 @@
 #!/bin/bash
 
+echo "    --> prep-inception.sh"
+
 set -eu
 
 pushd bootstrap
 
 echo "    --> bootstrap outputs"
 tofu output > ../inception/terraform.tfvars
-
 inception_email=$(tofu output inception_sa | jq -r)
-echo "    --> inception_email: ${inception_email}"
 tf_state_bucket_name=$(tofu output tf_state_bucket_name | jq -r)
-echo "    --> tf_state_bucket_name: ${tf_state_bucket_name}"
 name_prefix=$(tofu output name_prefix | jq -r)
-echo "    --> name_prefix: ${name_prefix}"
+echo "    --> results:"
+echo "        inception_email: ${inception_email}"
+echo "        tf_state_bucket_name: ${tf_state_bucket_name}"
+echo "        name_prefix: ${name_prefix}"
 
 popd
 
 echo "    --> create inception-sa-creds.json"
+echo "        FAILED_PRECONDITION means you reached the quota for service account keys"
 gcloud iam service-accounts keys create inception-sa-creds.json \
   --iam-account=${inception_email}
-# hint for fixes:
-# ERROR: (gcloud.iam.service-accounts.keys.create) FAILED_PRECONDITION: Precondition check failed.
-# that means that the quota for service account keys is reached.
 
+export SERVICE_ACCOUNT=$(cat inception-sa-creds.json | jq -r '.client_email')
 export GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json)
 
 pushd inception
@@ -37,10 +38,10 @@ terraform {
 }
 EOF
 
-echo "    --> Wait for the service account key to propagate"
+echo "    --> Wait for the service account key to propagate (5 secs)"
 sleep 5
 
-echo "    --> tofu init"
+echo "    --> tofu init with SERVICE_ACCOUNT $SERVICE_ACCOUNT"
 tofu init
 
 echo "    --> tofu state show module.inception.google_project_iam_custom_role.inception_destroy || tofu apply ..."

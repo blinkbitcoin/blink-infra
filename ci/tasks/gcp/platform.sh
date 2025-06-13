@@ -26,7 +26,6 @@ bin/prep-inception.sh
 echo "    --> bin/prep-platform.sh"
 bin/prep-platform.sh
 
-SERVICE_ACCOUNT=$(cat inception-sa-creds.json | jq -r '.client_email')
 echo "    --> make platform with user $SERVICE_ACCOUNT"
 echo yes | GOOGLE_CREDENTIALS=$(cat inception-sa-creds.json) make platform
 
