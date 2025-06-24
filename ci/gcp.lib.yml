@@ -35,6 +35,7 @@ source:
   - modules/platform/gcp
   - modules/postgresql/gcp
   - modules/smoketest/gcp
+  # - examples/gcp # maybe this would be useful as the scripts are also tested
   uri: #@ data.values.git_uri
   branch: #@ data.values.git_branch
   private_key: #@ data.values.github_private_key
@@ -189,6 +190,9 @@ plan:
   - get: gcp-testflight-uid
     passed:
     - #@ testflight_platform_job_name("gcp")
+  - get: bootstrap-tf-state
+    passed:
+    - #@ testflight_bootstrap_job_name("gcp")
 - task: smoketest
   config:
     platform: linux
@@ -200,6 +204,7 @@ plan:
       path: modules
     - name: gcp-testflight-uid
       path: testflight-uid
+    - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/smoketest.sh

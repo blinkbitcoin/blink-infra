@@ -55,7 +55,7 @@ done
 # Validate project ID
 if [[ -z "$PROJECT_ID" ]]; then
   echo -e "${RED}Error: PROJECT_ID is required${NC}"
-  echo "Usage: ./scrub_project.sh PROJECT_ID [--dry-run] [--no-ask] [--prefix PREFIX]"
+  echo "Usage: ./scrub_project.sh PROJECT_ID [--dry-run] [--no-ask] [--prefix PREFIX] [--delete-all-buckets]"
   exit 1
 fi
 
@@ -336,10 +336,41 @@ check_and_delete_resources \
 delete_vpc_networks
 
 # 10. Cloud Storage Buckets
-check_and_delete_resources \
-  "Storage buckets" \
-  "gsutil ls -p \"$PROJECT_ID\"" \
-  "gsutil -m rm -r %NAME%"
+delete_storage_buckets() {
+  echo -e "\n${BOLD}Checking for Storage buckets with prefix '${PREFIX}'...${NC}"
+  local buckets
+  buckets=$(gsutil ls -p "$PROJECT_ID" 2>/dev/null | sed 's|gs://||g' | sed 's|/$||g' || echo "")
+
+  if [[ -n "$buckets" ]]; then
+    # Filter buckets that start with our prefix
+    local matching_buckets=()
+
+    for bucket in $buckets; do
+      if [[ "$bucket" == "$PREFIX"* ]]; then
+        matching_buckets+=("$bucket")
+      fi
+    done
+
+    if [[ ${#matching_buckets[@]} -gt 0 ]]; then
+      echo "Found Storage buckets:"
+      for bucket in "${matching_buckets[@]}"; do
+        echo "- $bucket"
+      done
+
+      if confirm "Delete these Storage buckets and all their contents?"; then
+        for bucket in "${matching_buckets[@]}"; do
+          execute "gsutil rb -f gs://$bucket"
+        done
+      fi
+    else
+      echo "No Storage buckets found with prefix '${PREFIX}'."
+    fi
+  else
+    echo "No Storage buckets found."
+  fi
+}
+
+delete_storage_buckets
 
 # 11. Pub/Sub Topics
 check_and_delete_resources \
