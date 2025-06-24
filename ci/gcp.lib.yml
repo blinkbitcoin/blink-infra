@@ -35,7 +35,7 @@ source:
   - modules/platform/gcp
   - modules/postgresql/gcp
   - modules/smoketest/gcp
-  # - examples/gcp # maybe this would be useful as the scripts are also tested
+  #! - examples/gcp # maybe this would be useful as the scripts are also tested
   uri: #@ data.values.git_uri
   branch: #@ data.values.git_branch
   private_key: #@ data.values.github_private_key
