@@ -183,6 +183,10 @@ plan:
     trigger: true
     passed:
     - #@ testflight_platform_job_name("gcp")
+    #! not strictly necessary to make it dependent on the postgred but smoketest 
+    #! could test postgres as well and the bastion needs some more time  for the 
+    #! smoketest anyway (bootstrap script needs tofu to get installed which takes lots of time)
+    - #@ testflight_postgresql_job_name("gcp") 
   - get: repo
     passed:
     - #@ testflight_platform_job_name("gcp")
@@ -290,6 +294,7 @@ plan:
     - name: bootstrap-tf-state
     outputs:
     - name: repo
+    - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
     run:
       path: pipeline-tasks/ci/tasks/gcp/teardown.sh

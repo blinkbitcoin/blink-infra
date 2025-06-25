@@ -193,6 +193,7 @@ jobs:
       trigger: true
       passed:
       - gcp-testflight-platform
+      - gcp-testflight-postgresql
     - get: repo
       passed:
       - gcp-testflight-platform
@@ -383,6 +384,7 @@ jobs:
       - name: bootstrap-tf-state
       outputs:
       - name: repo
+      - name: bootstrap-tf-state
       params:
         GOOGLE_CREDENTIALS: ((testflight-gcp-creds.creds_json))
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
