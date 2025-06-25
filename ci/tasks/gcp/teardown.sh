@@ -59,6 +59,10 @@ if [ $success -eq 1 ]; then
   # Delete the local state file after successful bootstrap destruction
   cd ../../../bootstrap-tf-state/
   git rm -f bootstrap.tfstate
+  echo "    --> Committing changes"
+  config_git
+  git add -A
+  git commit -am "remove bootstrap tfstate"
 else
   exit 1
 fi
