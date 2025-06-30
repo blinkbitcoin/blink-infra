@@ -182,7 +182,7 @@ plan:
     trigger: true
     passed:
     - #@ testflight_platform_job_name("gcp")
-    #! not strictly necessary to make it dependent on the postgred but smoketest 
+    #! not strictly necessary to make it dependent on the postgres but smoketest 
     #! could test postgres as well and the bastion needs some more time  for the 
     #! smoketest anyway (bootstrap script needs tofu to get installed which takes lots of time)
     - #@ testflight_postgresql_job_name("gcp") 
