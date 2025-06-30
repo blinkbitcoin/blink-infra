@@ -3,7 +3,6 @@
 git_uri: git@github.com:blinkbitcoin/blink-infra.git
 git_branch: kn/initial_after_fork
 git_version_branch: testflight-name-prefix-uid-branch
-git_bootstrap_tf_state_branch: bootstrap-tf-state
 github_private_key: ((github-blinkbitcoin.private_key))
 
 deployments_git_uri: git@github.com:blinkbitcoin/blink-deployments.git
