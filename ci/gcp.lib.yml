@@ -80,7 +80,6 @@ plan:
     - name: gcp-testflight-uid
       path: testflight-uid
     - name: bootstrap-tf-state
-      path: bootstrap-tf-state
     outputs:
     - name: bootstrap-tf-state
     params: #@ gcp_testflight_task_params()
