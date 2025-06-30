@@ -59,7 +59,6 @@ jobs:
       - name: gcp-testflight-uid
         path: testflight-uid
       - name: bootstrap-tf-state
-        path: bootstrap-tf-state
       outputs:
       - name: bootstrap-tf-state
       params:
@@ -67,9 +66,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -123,9 +119,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -174,9 +167,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -226,9 +216,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -278,9 +265,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -332,9 +316,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project
@@ -390,9 +371,6 @@ jobs:
         SSH_PRIVATE_KEY: ((testflight-ssh.ssh_private_key))
         SSH_PUB_KEY: ((testflight-ssh.ssh_public_key))
         TESTFLIGHT_ADMINS: []
-        KUBE_HOST: ((tf-backend-creds.host))
-        KUBE_CA_CERT: ((tf-backend-creds.ca_cert))
-        KUBE_TOKEN: ((tf-backend-creds.token))
         TF_VAR_gcp_project: infra-testflight
         TF_VAR_enable_services: false
         BRANCH: kn/scrub_project

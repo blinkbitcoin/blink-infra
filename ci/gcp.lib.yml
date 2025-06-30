@@ -46,9 +46,6 @@ GOOGLE_CREDENTIALS: #@ data.values.testflight_gcp_creds
 SSH_PRIVATE_KEY: #@ data.values.testflight_ssh_private_key
 SSH_PUB_KEY: #@ data.values.testflight_ssh_pub_key
 TESTFLIGHT_ADMINS: #@ data.values.testflight_admins
-KUBE_HOST: #@ data.values.concourse_tf_kube_host
-KUBE_CA_CERT: #@ data.values.concourse_tf_kube_ca_cert
-KUBE_TOKEN: #@ data.values.concourse_tf_kube_token
 TF_VAR_gcp_project: infra-testflight
 TF_VAR_enable_services: false
 BRANCH: #@ data.values.git_branch

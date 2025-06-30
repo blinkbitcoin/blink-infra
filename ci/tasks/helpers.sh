@@ -24,18 +24,6 @@ EOF
   gcloud config set project "${TF_VAR_gcp_project}"
 }
 
-function init_kubeconfig() {
-  echo "    --> init_kubeconfig"
-  cat <<EOF > ${CI_ROOT}/ca.cert
-${KUBE_CA_CERT}
-EOF
-
-  kubectl config set-cluster tf-backend --server=${KUBE_HOST} --certificate-authority="${CI_ROOT}/ca.cert"
-  kubectl config set-credentials tf-backend-user --token=${KUBE_TOKEN}
-  kubectl config set-context tf-backend --cluster=tf-backend --user=tf-backend-user --namespace tf-backend
-  kubectl config use-context tf-backend
-}
-
 function init_bootstrap_gcp() {
   pushd bootstrap
   echo "    --> Verifying bootstrap state directory exists"
