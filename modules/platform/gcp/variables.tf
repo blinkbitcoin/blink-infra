@@ -22,7 +22,7 @@ variable "postgres_tier" {
   default = "db-f1-micro"
 }
 variable "pg_ha" {
-  default = false
+  default = true
 }
 variable "node_service_account" {}
 variable "min_default_node_count" {
@@ -33,6 +33,9 @@ variable "max_default_node_count" {
 }
 variable "deploy_lnd_ips" {
   default = false
+}
+variable "deploy_lnd2" {
+  default = true
 }
 
 locals {
@@ -54,4 +57,5 @@ locals {
   postgres_tier             = var.postgres_tier
   pg_ha                     = var.pg_ha
   deploy_lnd_ips            = var.deploy_lnd_ips
+  deploy_lnd2               = var.deploy_lnd2
 }
