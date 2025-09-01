@@ -59,7 +59,7 @@ output "useast1_default_version" {
   value = local.useast1_default_version
 }
 
-output "latest_versions" {
+output "latest_version" {
   description = "The version from the selected channel in both regions and available in both regions"
   value = local.stable_version
 }
