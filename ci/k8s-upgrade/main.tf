@@ -33,8 +33,8 @@ locals {
 
 
 
-  # Get the version that is the selected channel in both regions AND available in both regions
-  # This will be null if the conditions aren't met
+  # Get the version that is the STABLE channel default in both regions AND available in both regions
+  # This will be null if the conditions aren't met (which will cause the validation check to fail)
   stable_version = (
     local.uscentral1_default_version == local.useast1_default_version &&
     contains(local.common_all_versions, local.uscentral1_default_version)
@@ -61,5 +61,6 @@ output "useast1_default_version" {
 
 output "latest_version" {
   description = "The version from the selected channel in both regions and available in both regions"
-  value = local.stable_version
+  # This should never be null due to the validation check above, but adding extra safety
+  value = local.stable_version != null ? local.stable_version : ""
 }
