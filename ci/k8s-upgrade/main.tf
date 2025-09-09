@@ -22,7 +22,7 @@ locals {
   # Convert outputs to sets
   uscentral1_versions = data.google_container_engine_versions.uscentral1.valid_master_versions
   useast1_versions    = data.google_container_engine_versions.useast1.valid_master_versions
-  
+
   # Find the intersection of all sets, i.e., common versions
   common_all_versions = [for version in local.useast1_versions : version if contains(local.uscentral1_versions, version)]
 
