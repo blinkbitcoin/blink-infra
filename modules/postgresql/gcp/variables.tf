@@ -24,11 +24,6 @@ variable "work_mem" {
   type        = string
   default     = null
 }
-variable "wal_compression" {
-  description = "WAL compression method (e.g., 'zstd', 'lz4', 'pglz')"
-  type        = string
-  default     = null
-}
 variable "checkpoint_timeout" {
   description = "Maximum time between automatic WAL checkpoints (e.g., '10min')"
   type        = string
@@ -39,23 +34,8 @@ variable "random_page_cost" {
   type        = string
   default     = null
 }
-variable "jit_above_cost" {
-  description = "Sets the query cost above which JIT compilation is activated (-1 to disable)"
-  type        = string
-  default     = null
-}
-variable "jit" {
-  description = "Allows JIT compilation (on/off)"
-  type        = string
-  default     = null
-}
 variable "autovacuum_vacuum_cost_limit" {
   description = "Vacuum cost amount available before autovacuum worker sleeps"
-  type        = string
-  default     = null
-}
-variable "shared_preload_libraries" {
-  description = "Lists shared libraries to be preloaded at server start"
   type        = string
   default     = null
 }
@@ -71,16 +51,6 @@ variable "auto_explain_log_analyze" {
 }
 variable "auto_explain_log_buffers" {
   description = "Log buffer usage statistics (on/off)"
-  type        = string
-  default     = null
-}
-variable "max_locks_per_transaction" {
-  description = "Sets the maximum number of locks per transaction"
-  type        = string
-  default     = null
-}
-variable "max_pred_locks_per_transaction" {
-  description = "Sets the maximum number of predicate locks per transaction"
   type        = string
   default     = null
 }
@@ -149,18 +119,12 @@ locals {
 
   # LND PostgreSQL tuning parameters
   work_mem                       = var.work_mem
-  wal_compression                = var.wal_compression
   checkpoint_timeout             = var.checkpoint_timeout
   random_page_cost               = var.random_page_cost
-  jit_above_cost                 = var.jit_above_cost
-  jit                            = var.jit
   autovacuum_vacuum_cost_limit   = var.autovacuum_vacuum_cost_limit
-  shared_preload_libraries       = var.shared_preload_libraries
   auto_explain_log_min_duration  = var.auto_explain_log_min_duration
   auto_explain_log_analyze       = var.auto_explain_log_analyze
   auto_explain_log_buffers       = var.auto_explain_log_buffers
-  max_locks_per_transaction      = var.max_locks_per_transaction
-  max_pred_locks_per_transaction = var.max_pred_locks_per_transaction
   synchronous_standby_names      = var.synchronous_standby_names
 
   databases                     = var.databases

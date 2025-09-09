@@ -52,14 +52,6 @@ resource "google_sql_database_instance" "instance" {
     }
 
     dynamic "database_flags" {
-      for_each = local.wal_compression != null ? [local.wal_compression] : []
-      content {
-        name  = "wal_compression"
-        value = local.wal_compression
-      }
-    }
-
-    dynamic "database_flags" {
       for_each = local.checkpoint_timeout != null ? [local.checkpoint_timeout] : []
       content {
         name  = "checkpoint_timeout"
@@ -76,34 +68,10 @@ resource "google_sql_database_instance" "instance" {
     }
 
     dynamic "database_flags" {
-      for_each = local.jit_above_cost != null ? [local.jit_above_cost] : []
-      content {
-        name  = "jit_above_cost"
-        value = local.jit_above_cost
-      }
-    }
-
-    dynamic "database_flags" {
-      for_each = local.jit != null ? [local.jit] : []
-      content {
-        name  = "jit"
-        value = local.jit
-      }
-    }
-
-    dynamic "database_flags" {
       for_each = local.autovacuum_vacuum_cost_limit != null ? [local.autovacuum_vacuum_cost_limit] : []
       content {
         name  = "autovacuum_vacuum_cost_limit"
         value = local.autovacuum_vacuum_cost_limit
-      }
-    }
-
-    dynamic "database_flags" {
-      for_each = local.shared_preload_libraries != null ? [local.shared_preload_libraries] : []
-      content {
-        name  = "shared_preload_libraries"
-        value = local.shared_preload_libraries
       }
     }
 
@@ -128,22 +96,6 @@ resource "google_sql_database_instance" "instance" {
       content {
         name  = "auto_explain.log_buffers"
         value = local.auto_explain_log_buffers
-      }
-    }
-
-    dynamic "database_flags" {
-      for_each = local.max_locks_per_transaction != null ? [local.max_locks_per_transaction] : []
-      content {
-        name  = "max_locks_per_transaction"
-        value = local.max_locks_per_transaction
-      }
-    }
-
-    dynamic "database_flags" {
-      for_each = local.max_pred_locks_per_transaction != null ? [local.max_pred_locks_per_transaction] : []
-      content {
-        name  = "max_pred_locks_per_transaction"
-        value = local.max_pred_locks_per_transaction
       }
     }
 
