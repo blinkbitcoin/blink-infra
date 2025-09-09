@@ -17,6 +17,11 @@ variable "tier" {
   default = "db-custom-1-3840"
 }
 variable "max_connections" { default = 0 }
+variable "work_mem" {
+  description = "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files"
+  type        = string
+  default     = null
+}
 variable "enable_detailed_logging" {
   description = "Enable detailed logging for the PostgreSQL instance"
   type        = bool
@@ -72,6 +77,7 @@ locals {
   highly_available              = var.highly_available
   tier                          = var.tier
   max_connections               = var.max_connections
+  work_mem                      = var.work_mem
   databases                     = var.databases
   migration_databases           = concat(var.databases, ["postgres"])
   big_query_viewers             = var.big_query_viewers
