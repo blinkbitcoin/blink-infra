@@ -25,7 +25,7 @@ variable "work_mem" {
   default     = null
 }
 variable "checkpoint_timeout" {
-  description = "Maximum time between automatic WAL checkpoints (e.g., '10min')"
+  description = "Maximum time between automatic WAL checkpoints in seconds (e.g., '600' for 10 minutes)"
   type        = string
   default     = null
 }
