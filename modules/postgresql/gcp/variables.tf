@@ -53,7 +53,7 @@ variable "auto_explain_log_buffers" {
   default     = null
 }
 variable "wal_compression" {
-  description = "Enables compression of full-page writes written to WAL (PostgreSQL 15+ only)"
+  description = "Enables compression of full-page writes written to WAL (zstd is available from PostgreSQL 15+ only)"
   type        = string
   default     = null
 }
