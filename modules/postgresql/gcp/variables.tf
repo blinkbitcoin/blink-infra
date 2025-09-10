@@ -133,17 +133,17 @@ locals {
   max_connections              = var.max_connections
 
   # LND PostgreSQL tuning parameters
-  work_mem                         = var.work_mem
-  checkpoint_timeout               = var.checkpoint_timeout
-  random_page_cost                 = var.random_page_cost
-  autovacuum_vacuum_cost_limit     = var.autovacuum_vacuum_cost_limit
-  auto_explain_log_min_duration    = var.auto_explain_log_min_duration
-  auto_explain_log_analyze         = var.auto_explain_log_analyze
-  auto_explain_log_buffers         = var.auto_explain_log_buffers
-  synchronous_standby_names        = var.synchronous_standby_names
-  wal_compression                  = var.wal_compression
-  max_locks_per_transaction        = var.max_locks_per_transaction
-  max_pred_locks_per_transaction   = var.max_pred_locks_per_transaction
+  work_mem                       = var.work_mem
+  checkpoint_timeout             = var.checkpoint_timeout
+  random_page_cost               = var.random_page_cost
+  autovacuum_vacuum_cost_limit   = var.autovacuum_vacuum_cost_limit
+  auto_explain_log_min_duration  = var.auto_explain_log_min_duration
+  auto_explain_log_analyze       = var.auto_explain_log_analyze
+  auto_explain_log_buffers       = var.auto_explain_log_buffers
+  synchronous_standby_names      = var.synchronous_standby_names
+  wal_compression                = var.wal_compression
+  max_locks_per_transaction      = var.max_locks_per_transaction
+  max_pred_locks_per_transaction = var.max_pred_locks_per_transaction
 
   databases                     = var.databases
   migration_databases           = concat(var.databases, ["postgres"])

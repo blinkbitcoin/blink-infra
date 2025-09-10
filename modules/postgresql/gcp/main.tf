@@ -114,7 +114,7 @@ resource "google_sql_database_instance" "instance" {
         value = local.wal_compression
       }
     }
-    
+
     dynamic "database_flags" {
       for_each = local.max_locks_per_transaction != null ? [local.max_locks_per_transaction] : []
       content {
