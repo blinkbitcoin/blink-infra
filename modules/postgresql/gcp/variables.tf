@@ -17,7 +17,6 @@ variable "tier" {
   default = "db-custom-1-3840"
 }
 variable "max_connections" { default = 0 }
-
 variable "work_mem" {
   description = "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files"
   type        = string
@@ -133,7 +132,6 @@ locals {
   auto_explain_log_min_duration  = var.auto_explain_log_min_duration
   auto_explain_log_analyze       = var.auto_explain_log_analyze
   auto_explain_log_buffers       = var.auto_explain_log_buffers
-  synchronous_standby_names      = var.synchronous_standby_names
   wal_compression                = var.wal_compression
   max_locks_per_transaction      = var.max_locks_per_transaction
   max_pred_locks_per_transaction = var.max_pred_locks_per_transaction
