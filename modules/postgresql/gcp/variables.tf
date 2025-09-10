@@ -54,11 +54,6 @@ variable "auto_explain_log_buffers" {
   type        = string
   default     = null
 }
-variable "synchronous_standby_names" {
-  description = "List of names of potential synchronous standbys"
-  type        = string
-  default     = null
-}
 variable "wal_compression" {
   description = "Enables compression of full-page writes written to WAL (PostgreSQL 15+ only)"
   type        = string

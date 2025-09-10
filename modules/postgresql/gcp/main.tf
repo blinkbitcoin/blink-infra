@@ -100,14 +100,6 @@ resource "google_sql_database_instance" "instance" {
     }
 
     dynamic "database_flags" {
-      for_each = local.synchronous_standby_names != null ? [local.synchronous_standby_names] : []
-      content {
-        name  = "synchronous_standby_names"
-        value = local.synchronous_standby_names
-      }
-    }
-
-    dynamic "database_flags" {
       for_each = local.wal_compression != null ? [local.wal_compression] : []
       content {
         name  = "wal_compression"
