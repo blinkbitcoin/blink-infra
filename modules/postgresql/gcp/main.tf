@@ -51,6 +51,78 @@ resource "google_sql_database_instance" "instance" {
     }
 
     dynamic "database_flags" {
+      for_each = local.checkpoint_timeout != null ? [local.checkpoint_timeout] : []
+      content {
+        name  = "checkpoint_timeout"
+        value = local.checkpoint_timeout
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.random_page_cost != null ? [local.random_page_cost] : []
+      content {
+        name  = "random_page_cost"
+        value = local.random_page_cost
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.autovacuum_vacuum_cost_limit != null ? [local.autovacuum_vacuum_cost_limit] : []
+      content {
+        name  = "autovacuum_vacuum_cost_limit"
+        value = local.autovacuum_vacuum_cost_limit
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.auto_explain_log_min_duration != null ? [local.auto_explain_log_min_duration] : []
+      content {
+        name  = "auto_explain.log_min_duration"
+        value = local.auto_explain_log_min_duration
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.auto_explain_log_analyze != null ? [local.auto_explain_log_analyze] : []
+      content {
+        name  = "auto_explain.log_analyze"
+        value = local.auto_explain_log_analyze
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.auto_explain_log_buffers != null ? [local.auto_explain_log_buffers] : []
+      content {
+        name  = "auto_explain.log_buffers"
+        value = local.auto_explain_log_buffers
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.wal_compression != null ? [local.wal_compression] : []
+      content {
+        name  = "wal_compression"
+        value = local.wal_compression
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.max_locks_per_transaction != null ? [local.max_locks_per_transaction] : []
+      content {
+        name  = "max_locks_per_transaction"
+        value = local.max_locks_per_transaction
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.max_pred_locks_per_transaction != null ? [local.max_pred_locks_per_transaction] : []
+      content {
+        name  = "max_pred_locks_per_transaction"
+        value = local.max_pred_locks_per_transaction
+      }
+    }
+
+    dynamic "database_flags" {
       for_each = var.enable_detailed_logging ? [{
         name  = "log_statement"
         value = "all"
