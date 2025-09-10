@@ -106,6 +106,30 @@ resource "google_sql_database_instance" "instance" {
         value = local.synchronous_standby_names
       }
     }
+
+    dynamic "database_flags" {
+      for_each = local.wal_compression != null ? [local.wal_compression] : []
+      content {
+        name  = "wal_compression"
+        value = local.wal_compression
+      }
+    }
+    
+    dynamic "database_flags" {
+      for_each = local.max_locks_per_transaction != null ? [local.max_locks_per_transaction] : []
+      content {
+        name  = "max_locks_per_transaction"
+        value = local.max_locks_per_transaction
+      }
+    }
+
+    dynamic "database_flags" {
+      for_each = local.max_pred_locks_per_transaction != null ? [local.max_pred_locks_per_transaction] : []
+      content {
+        name  = "max_pred_locks_per_transaction"
+        value = local.max_pred_locks_per_transaction
+      }
+    }
     # End of LND PostgreSQL tuning parameters
 
     dynamic "database_flags" {
