@@ -18,7 +18,6 @@ variable "tier" {
 }
 variable "max_connections" { default = 0 }
 
-# LND PostgreSQL tuning parameters
 variable "work_mem" {
   description = "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files"
   type        = string
@@ -69,7 +68,6 @@ variable "max_pred_locks_per_transaction" {
   type        = string
   default     = null
 }
-# End of LND PostgreSQL tuning parameters
 
 variable "enable_detailed_logging" {
   description = "Enable detailed logging for the PostgreSQL instance"

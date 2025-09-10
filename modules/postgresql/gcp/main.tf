@@ -42,7 +42,6 @@ resource "google_sql_database_instance" "instance" {
       }
     }
 
-    # LND PostgreSQL tuning parameters
     dynamic "database_flags" {
       for_each = local.work_mem != null ? [local.work_mem] : []
       content {
@@ -122,7 +121,6 @@ resource "google_sql_database_instance" "instance" {
         value = local.max_pred_locks_per_transaction
       }
     }
-    # End of LND PostgreSQL tuning parameters
 
     dynamic "database_flags" {
       for_each = var.enable_detailed_logging ? [{
