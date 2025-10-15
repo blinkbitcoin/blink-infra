@@ -60,7 +60,7 @@ output "useast1_default_version" {
 }
 
 output "latest_version" {
-  description = "The latest version with prefix ${local.version_prefix} available in both regions. Prefers STABLE channel default if it matches the prefix."
+  description = "The latest version with the configured prefix available in both regions. Prefers STABLE channel default if it matches the prefix."
   # This should never be null due to the validation check above, but adding extra safety
   value = local.stable_version != null ? local.stable_version : ""
 }
