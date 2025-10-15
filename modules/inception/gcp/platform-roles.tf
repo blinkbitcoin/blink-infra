@@ -32,6 +32,7 @@ resource "google_project_iam_custom_role" "platform_make" {
     "compute.firewalls.get",
     "compute.firewalls.update",
     "compute.instanceGroupManagers.get",
+    "compute.instanceGroupManagers.list",
     "compute.networks.get",
     "compute.networks.use",
     "compute.networks.updatePolicy",
