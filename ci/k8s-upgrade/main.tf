@@ -31,14 +31,14 @@ locals {
   uscentral1_default_version = data.google_container_engine_versions.uscentral1.release_channel_default_version[local.channel]
   useast1_default_version    = data.google_container_engine_versions.useast1.release_channel_default_version[local.channel]
 
-
-
-  # Get the version that is the STABLE channel default in both regions AND available in both regions
-  # This will be null if the conditions aren't met (which will cause the validation check to fail)
+  # Check if the STABLE channel default matches the version_prefix and is available in both regions
+  # If the default is outside our version_prefix (e.g., default is 1.33 but we want 1.32),
+  # fall back to the latest version from version_prefix that's available in both regions
   stable_version = (
     local.uscentral1_default_version == local.useast1_default_version &&
+    startswith(local.uscentral1_default_version, local.version_prefix) &&
     contains(local.common_all_versions, local.uscentral1_default_version)
-  ) ? local.uscentral1_default_version : null
+  ) ? local.uscentral1_default_version : (length(local.common_all_versions) > 0 ? local.common_all_versions[0] : null)
 
 
 }
@@ -47,7 +47,7 @@ locals {
 check "stable_version_available" {
   assert {
     condition     = local.stable_version != null
-    error_message = "No stable version found. Either the ${local.channel} channel defaults don't match between regions (us-central1: ${local.uscentral1_default_version}, us-east1: ${local.useast1_default_version}) or the default version is not available in both regions."
+    error_message = "No stable version found with prefix ${local.version_prefix} that is available in both regions (us-central1 and us-east1). Note: ${local.channel} channel default is ${local.uscentral1_default_version} in us-central1 and ${local.useast1_default_version} in us-east1."
   }
 }
 
@@ -60,7 +60,7 @@ output "useast1_default_version" {
 }
 
 output "latest_version" {
-  description = "The version from the selected channel in both regions and available in both regions"
+  description = "The latest version with prefix ${local.version_prefix} available in both regions. Prefers STABLE channel default if it matches the prefix."
   # This should never be null due to the validation check above, but adding extra safety
   value = local.stable_version != null ? local.stable_version : ""
 }
