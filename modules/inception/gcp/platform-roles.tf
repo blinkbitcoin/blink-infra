@@ -5,6 +5,10 @@ resource "google_project_iam_custom_role" "platform_make" {
   title       = "Create Platform"
   description = "Role for executing platform tf files for ${local.name_prefix}"
   permissions = [
+    "logging.buckets.create",
+    "logging.buckets.get",
+    "logging.buckets.list",
+    "logging.buckets.update",
     "logging.logMetrics.create",
     "logging.logMetrics.get",
     "logging.logMetrics.list",
@@ -111,6 +115,7 @@ resource "google_project_iam_custom_role" "platform_destroy" {
   title       = "Destroy Platform"
   description = "Role for destroying the platform ${local.name_prefix}"
   permissions = [
+    "logging.buckets.delete",
     "logging.logMetrics.delete",
     "compute.backendBuckets.delete",
     "compute.addresses.delete",
