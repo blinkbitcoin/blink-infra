@@ -112,6 +112,18 @@ variable "pre_promotion" {
   default     = false
 }
 
+variable "disk_size_gb" {
+  description = "Initial disk size in GB. If null, uses GCP default (10GB)."
+  type        = number
+  default     = null
+}
+
+variable "disk_autoresize_limit" {
+  description = "Maximum disk size in GB for auto-resize. 0 = unlimited (default GCP behavior)."
+  type        = number
+  default     = 0
+}
+
 locals {
   gcp_project                  = var.gcp_project
   vpc_name                     = var.vpc_name
@@ -144,5 +156,7 @@ locals {
   big_query_connection_location = var.big_query_connection_location
   prep_upgrade_as_source_db     = var.prep_upgrade_as_source_db
   pre_promotion                 = var.pre_promotion
+  disk_size_gb                  = var.disk_size_gb
+  disk_autoresize_limit         = var.disk_autoresize_limit
   database_port                 = 5432
 }
