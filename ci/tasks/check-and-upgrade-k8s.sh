@@ -8,8 +8,8 @@ pushd pipeline-tasks/ci/k8s-upgrade
 tofu init && tofu apply -auto-approve
 LATEST_VERSION="$(tofu output -json | jq -r .latest_version.value)"
 
-if [[ $LATEST_VERSION == "" ]]; then
-  echo "Failed to get latest version"
+if [[ -z "${LATEST_VERSION}" || "${LATEST_VERSION}" == "null" ]]; then
+  echo "Failed to get latest version (got: '${LATEST_VERSION}')"
   exit 1
 fi
 
@@ -18,6 +18,13 @@ popd
 pushd repo
 
 CURRENT_VERSION=$(hcledit -f modules/platform/gcp/variables.tf attribute get variable.kube_version.default | tr -d '"')
+
+if [[ -z "${CURRENT_VERSION}" || "${CURRENT_VERSION}" == "null" ]]; then
+  echo "CURRENT_VERSION is null/empty — setting to LATEST_VERSION (${LATEST_VERSION}) unconditionally"
+  hcledit -u -f modules/platform/gcp/variables.tf attribute set variable.kube_version.default \"$LATEST_VERSION\"
+  make_commit "fix: set kubernetes version to '${LATEST_VERSION}' (was null)"
+  exit 0
+fi
 
 echo "    --> CURRENT_VERSION: ${CURRENT_VERSION}"
 echo "    --> LATEST_VERSION:  ${LATEST_VERSION}" 
