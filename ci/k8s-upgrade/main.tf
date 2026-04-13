@@ -1,6 +1,13 @@
+variable "version_prefix" {
+  description = "Kubernetes major/minor prefix guard (for example: 1.33.)"
+  type        = string
+  default     = ""
+}
+
 locals {
-  project = "infra-testflight"
-  channel = "STABLE"
+  version_prefix = var.version_prefix
+  project        = "infra-testflight"
+  channel        = "STABLE"
 }
 
 data "google_container_engine_versions" "uscentral1" {
@@ -26,7 +33,7 @@ output "latest_version" {
   value       = local.default_version
 
   precondition {
-    condition     = local.default_version != null && can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+-gke\\.[0-9]+$", local.default_version))
-    error_message = "The ${local.channel} channel returned an invalid default version: '${local.default_version}'. Expected format: X.Y.Z-gke.N"
+    condition     = local.default_version != null && can(regex("^[0-9]+\\.[0-9]+\\.[0-9]+-gke\\.[0-9]+$", local.default_version)) && (local.version_prefix == "" || startswith(local.default_version, local.version_prefix))
+    error_message = "The ${local.channel} channel returned an invalid default version: '${local.default_version}'. Expected format: X.Y.Z-gke.N and version prefix '${local.version_prefix}' (when configured)."
   }
 }

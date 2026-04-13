@@ -3,9 +3,25 @@
 set -eu
 
 source pipeline-tasks/ci/tasks/helpers.sh
+pushd repo
+
+CURRENT_VERSION=$(hcledit -f modules/platform/gcp/variables.tf attribute get variable.kube_version.default | tr -d '"')
+
+VERSION_PREFIX=""
+if [[ -n "${CURRENT_VERSION}" && "${CURRENT_VERSION}" != "null" ]]; then
+  if [[ "${CURRENT_VERSION}" =~ ^([0-9]+\.[0-9]+)\.[0-9]+-gke\.[0-9]+$ ]]; then
+    VERSION_PREFIX="${BASH_REMATCH[1]}."
+  else
+    echo "CURRENT_VERSION has unexpected format: '${CURRENT_VERSION}'"
+    exit 1
+  fi
+fi
+
+popd
+
 pushd pipeline-tasks/ci/k8s-upgrade
 
-tofu init && tofu apply -auto-approve
+tofu init && tofu apply -auto-approve -var="version_prefix=${VERSION_PREFIX}"
 LATEST_VERSION="$(tofu output -json | jq -r .latest_version.value)"
 
 if [[ -z "${LATEST_VERSION}" || "${LATEST_VERSION}" == "null" ]]; then
@@ -16,8 +32,6 @@ fi
 popd
 
 pushd repo
-
-CURRENT_VERSION=$(hcledit -f modules/platform/gcp/variables.tf attribute get variable.kube_version.default | tr -d '"')
 
 if [[ -z "${CURRENT_VERSION}" || "${CURRENT_VERSION}" == "null" ]]; then
   echo "CURRENT_VERSION is null/empty — setting to LATEST_VERSION (${LATEST_VERSION}) unconditionally"
