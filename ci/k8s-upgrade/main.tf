@@ -1,7 +1,7 @@
 variable "version_prefix" {
   description = "Kubernetes major/minor prefix guard (for example: 1.33.)"
   type        = string
-  default     = ""
+  default     = "1.33."
 }
 
 locals {

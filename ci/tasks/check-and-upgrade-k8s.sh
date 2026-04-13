@@ -7,7 +7,9 @@ pushd repo
 
 CURRENT_VERSION=$(hcledit -f modules/platform/gcp/variables.tf attribute get variable.kube_version.default | tr -d '"')
 
-VERSION_PREFIX=""
+# Fallback only: when CURRENT_VERSION is null/empty, use a pinned minor guard to avoid
+# unexpected STABLE cross-minor upgrades during bootstrap/self-heal.
+VERSION_PREFIX="1.33."
 if [[ -n "${CURRENT_VERSION}" && "${CURRENT_VERSION}" != "null" ]]; then
   if [[ "${CURRENT_VERSION}" =~ ^([0-9]+\.[0-9]+)\.[0-9]+-gke\.[0-9]+$ ]]; then
     VERSION_PREFIX="${BASH_REMATCH[1]}."
