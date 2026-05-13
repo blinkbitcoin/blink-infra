@@ -19,6 +19,10 @@ resource "google_sql_database_instance" "instance" {
     tier                        = local.tier
     availability_type           = local.highly_available ? "REGIONAL" : "ZONAL"
     deletion_protection_enabled = !local.destroyable
+    disk_autoresize             = true
+    disk_autoresize_limit       = local.disk_autoresize_limit
+    disk_size                   = local.disk_size_gb
+    disk_type                   = "PD_SSD"
 
     dynamic "database_flags" {
       for_each = local.prep_upgrade_as_source_db ? [{
