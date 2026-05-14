@@ -21,7 +21,7 @@ variable "users" {
 }
 
 module "inception" {
-  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/inception/gcp?ref=cd083eb"
+  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/inception/gcp?ref=b78fbf3"
   # source = "../../../modules/inception/gcp"
 
   name_prefix             = var.name_prefix

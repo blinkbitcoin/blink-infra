@@ -12,7 +12,7 @@ variable "destroyable_cluster" {
 }
 
 module "platform" {
-  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/platform/gcp?ref=cd083eb"
+  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/platform/gcp?ref=b78fbf3"
   # source = "../../../modules/platform/gcp"
 
   name_prefix               = var.name_prefix
