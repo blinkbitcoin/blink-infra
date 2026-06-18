@@ -4,7 +4,7 @@ locals {
   bitcoin_version  = "27.0"
   cepler_version   = "0.7.15"
   lnd_version      = "0.18.5-beta"
-  kubectl_version  = "1.30.4"
+  kubectl_version  = "1.32.8"
   k9s_version      = "0.50.6"
   bos_version      = "19.4.14"
   kratos_version   = "0.11.1"
