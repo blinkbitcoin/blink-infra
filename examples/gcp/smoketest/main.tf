@@ -25,7 +25,7 @@ provider "helm" {
 }
 
 module "smoketest" {
-  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/smoketest/gcp?ref=90bf37d"
+  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/smoketest/gcp?ref=0fa1779"
   # source = "../../../modules/smoketest"
 
   name_prefix      = var.name_prefix
