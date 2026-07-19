@@ -3,6 +3,7 @@ variable "database_port" {}
 variable "instance_name" {}
 variable "destroyable" {}
 variable "tier" {}
+variable "edition" {}
 variable "highly_available" {}
 variable "enable_detailed_logging" {}
 variable "replication" {}
@@ -202,6 +203,7 @@ resource "google_sql_database_instance" "destination_instance" {
 
   settings {
     tier                        = var.tier
+    edition                     = var.edition
     availability_type           = var.highly_available ? "REGIONAL" : "ZONAL"
     deletion_protection_enabled = false
 

@@ -17,6 +17,7 @@ resource "google_sql_database_instance" "instance" {
 
   settings {
     tier                        = local.tier
+    edition                     = local.edition
     availability_type           = local.highly_available ? "REGIONAL" : "ZONAL"
     deletion_protection_enabled = !local.destroyable
     disk_autoresize             = true
@@ -202,6 +203,7 @@ module "migration" {
   instance_name                   = local.instance_name
   destroyable                     = local.destroyable
   tier                            = local.tier
+  edition                         = local.edition
   highly_available                = local.highly_available
   enable_detailed_logging         = var.enable_detailed_logging
   replication                     = local.replication

@@ -16,6 +16,10 @@ variable "highly_available" {
 variable "tier" {
   default = "db-custom-1-3840"
 }
+variable "edition" {
+  description = "Cloud SQL edition. New instances default to ENTERPRISE_PLUS on the GCP API side, which is incompatible with db-g1-* / db-custom-* tiers"
+  default     = "ENTERPRISE"
+}
 variable "max_connections" { default = 0 }
 variable "work_mem" {
   description = "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files"
@@ -134,6 +138,7 @@ locals {
   destroyable                  = var.destroyable
   highly_available             = var.highly_available
   tier                         = var.tier
+  edition                      = var.edition
   max_connections              = var.max_connections
 
   # LND PostgreSQL tuning parameters
