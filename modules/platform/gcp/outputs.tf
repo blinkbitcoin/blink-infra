@@ -19,7 +19,7 @@ output "lnd1_ip" {
 }
 
 output "lnd2_ip" {
-  value = local.deploy_lnd_ips ? google_compute_address.lnd2[0].address : ""
+  value = local.deploy_lnd_ips && local.deploy_lnd2 ? google_compute_address.lnd2[0].address : ""
 }
 
 output "lnd1_internal_ip" {
@@ -27,5 +27,5 @@ output "lnd1_internal_ip" {
 }
 
 output "lnd2_internal_ip" {
-  value = local.deploy_lnd_ips ? google_compute_address.lnd2_internal_ip[0].address : ""
+  value = local.deploy_lnd_ips && local.deploy_lnd2 ? google_compute_address.lnd2_internal_ip[0].address : ""
 }
