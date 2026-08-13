@@ -8,7 +8,7 @@ variable "tf_state_bucket_force_destroy" {
 }
 
 module "bootstrap" {
-  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/bootstrap/gcp?ref=9f491f3"
+  source = "git::https://github.com/blinkbitcoin/blink-infra.git//modules/bootstrap/gcp?ref=16510cb"
   # source = "../../../modules/bootstrap/gcp"
 
   name_prefix                   = var.name_prefix
